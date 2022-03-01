@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { StyleSheet, Text, View, Button, Alert } from "react-native";
-// import SwipeCards from "react-native-swipe-cards-deck";
-import SwipeCards from './SwiperDeck/SwipeCards';
+import SwipeCards from "react-native-swipe-cards-deck";
+// import SwipeCards from './SwiperDeck/SwipeCards';
 
 function Card({ data, swiper, onYup, onNope}) {
   return (
