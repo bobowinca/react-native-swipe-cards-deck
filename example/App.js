@@ -1,11 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
-import SwipeCards from "react-native-swipe-cards-deck";
+import React, { useEffect, useState, useRef } from "react";
+import { StyleSheet, Text, View, Button, Alert } from "react-native";
+// import SwipeCards from "react-native-swipe-cards-deck";
+import SwipeCards from './SwiperDeck/SwipeCards';
 
-function Card({ data }) {
+function Card({ data, swiper, onYup, onNope}) {
   return (
     <View style={[styles.card, { backgroundColor: data.backgroundColor }]}>
       <Text>{data.text}</Text>
+      <Button
+        title="Yup"
+        // onPress={() => Alert.alert('Yup')}
+        onPress={onYup}
+      />
+      <Button
+        title="Nope"
+        // onPress={() => Alert.alert('Nope')}
+        onPress={onNope}
+      />
     </View>
   );
 }
@@ -20,6 +31,16 @@ function StatusCard({ text }) {
 
 export default function App() {
   const [cards, setCards] = useState();
+
+  const swiperRef = useRef(null);
+
+  const onYup = () => {
+    swiperRef.current.swipeYup();
+  }
+
+  const onNope = () => {
+    swiperRef.current.swipeNope();
+  }
 
   // replace with real remote data fetching
   useEffect(() => {
@@ -37,11 +58,13 @@ export default function App() {
 
   function handleYup(card) {
     console.log(`Yup for ${card.text}`);
-    return true; // return false if you wish to cancel the action
+    // return true; // return false if you wish to cancel the action
+    return false;
   }
   function handleNope(card) {
     console.log(`Nope for ${card.text}`);
-    return true;
+    // return true;
+    return false;
   }
   function handleMaybe(card) {
     console.log(`Maybe for ${card.text}`);
@@ -56,8 +79,10 @@ export default function App() {
             alignItems: "stretch",
             flexGrow: 1,
           }}
+          ref={swiperRef}
+          onClickHandler={() => {true}}
           cards={cards}
-          renderCard={(cardData) => <Card data={cardData} />}
+          renderCard={(cardData) => <Card data={cardData} onYup={onYup} onNope={onNope} />}
           keyExtractor={(cardData) => String(cardData.text)}
           renderNoMoreCards={() => <StatusCard text="No more cards..." />}
           actions={{
