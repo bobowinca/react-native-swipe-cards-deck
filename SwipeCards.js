@@ -470,7 +470,7 @@ export default class SwipeCards extends Component {
             : undefined
         }
         style={[styles.card, animatedCardStyles]}
-        {...this._panResponder.panHandlers}
+        // {...this._panResponder.panHandlers}
       >
         {this.props.renderCard(this.state.card)}
       </Animated.View>
